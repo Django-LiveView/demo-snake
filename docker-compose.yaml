@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+
+  postgresql:
+    image: postgres
+    container_name: ${PROJECT_NAME}-postgresql
+    restart: "no"
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - ${DB_PORT}:5432
+    networks:
+      default:
+
+  django:
+    build:
+      context: ./
+      dockerfile: ./Dockerfiles/django/Dockerfile
+    container_name: ${PROJECT_NAME}-django
+    restart: "no"
+    entrypoint: /django-launcher.sh
+    volumes:
+      - .:/usr/src/app/
+    env_file:
+      - .env
+    expose:
+      - 8000
+    depends_on:
+      - postgresql
+    links:
+      - redis
+    networks:
+      default:
+
+  caddy:
+    image: caddy:alpine
+    container_name: ${PROJECT_NAME}-caddy
+    restart: "no"
+    ports:
+        - ${CADDY_PORT_HTTP}:80
+        - ${CADDY_PORT_HTTPS}:443
+    volumes:
+        - ./Caddyfile.dev:/etc/caddy/Caddyfile
+        - ./caddy_data:/data
+        - .:/usr/src/app/
+    depends_on:
+      - django
+    networks:
+      default:
+        aliases:
+          - django.localhost
+
+  redis:
+    image: redis:alpine
+    container_name: ${PROJECT_NAME}-redis
+    restart: "no"
+    expose:
+      - ${REDIS_PORT}
+    networks:
+      default:
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: ${PROJECT_NAME}-mailhog
+    restart: "no"
+    expose:
+        - 1025
+    networks:
+      default:
+
+  gulp:
+    build:
+      context: ./
+      dockerfile: ./Dockerfiles/gulp/Dockerfile
+    container_name: ${PROJECT_NAME}-gulp
+    entrypoint: gulp dev
+    restart: "no"
+    expose:
+      - 3000
+      - 3001
+    volumes:
+      - .:/usr/src/app/
+      - /usr/src/app/node_modules
+    depends_on:
+      - caddy
+    networks:
+      default:

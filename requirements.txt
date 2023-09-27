@@ -1,0 +1,32 @@
+# Django
+django===4.0.6
+django-extensions===3.2.0
+dj-database-url==0.5.0
+
+# Django REST
+djangorestframework==3.13.1
+django-cors-headers==3.10.0
+
+# Databases
+psycopg2-binary===2.9.3
+redis==4.3.4
+
+# Faker
+Faker===13.15.1
+
+# Django Server
+daphne===3.0.2
+asgiref===3.5.2
+
+# Templates
+## Image processing
+Pillow===9.2.0
+
+# Testing
+pytest==7.1.2
+pytest-django==4.5.2
+
+# Quality code
+black==22.6.0
+flake8==4.0.1
+isort==5.10.1
