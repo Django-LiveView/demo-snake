@@ -1,5 +1,7 @@
 #!/bin/sh
 
+pip3 install ./django-liveview-1.0.5.tar.gz
+
 # Collect static files
 echo "Collect static files"
 python3 manage.py collectstatic --noinput
@@ -9,9 +11,11 @@ echo "Apply database migrations"
 python3 manage.py makemigrations
 python3 manage.py migrate
 
+
 # Start server
-echo "Starting server"
-## With WebSockets
+
+echo "*****Start server with debug mode*****"
 python3 manage.py runserver 0.0.0.0:8000
+
 #echo "*****Start server with production mode*****"
 #daphne -b 0.0.0.0 -p 8000 core.asgi:application

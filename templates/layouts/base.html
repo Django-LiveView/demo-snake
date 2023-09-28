@@ -122,8 +122,11 @@
 	    rel="stylesheet"
 	    media="all and (min-width: 600px)"
 	>
+	<script type="module" src="{% static 'js/main.js' %}" defer></script>
     </head>
-    <body>
+    <body
+	data-host="{{ request.get_host }}"
+    >
 	{% block content %}{% endblock %}
     </body>
 </html>
