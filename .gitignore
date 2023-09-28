@@ -1,0 +1,4 @@
+static/admin
+/.env
+/run.sh
+/static/django_extensions

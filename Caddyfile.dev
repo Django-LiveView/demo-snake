@@ -1,9 +1,4 @@
 http://project.localhost {
-    reverse_proxy gulp:3000
-}
-
-http://django.localhost {
-
     root * /usr/src/app/
     encode gzip zstd
 
@@ -15,12 +10,4 @@ http://django.localhost {
 
     file_server /static/*
     file_server /media/*
-}
-
-http://gulp-socket.localhost {
-    reverse_proxy gulp:3001
-}
-
-http://webmail.localhost {
-    reverse_proxy mailhog:8025
 }

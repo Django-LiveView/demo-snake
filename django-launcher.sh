@@ -1,7 +1,5 @@
 #!/bin/sh
 
-pip3 install ./django-liveview-1.0.5.tar.gz
-
 # Collect static files
 echo "Collect static files"
 python3 manage.py collectstatic --noinput
