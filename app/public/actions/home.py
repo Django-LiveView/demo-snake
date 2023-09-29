@@ -54,12 +54,34 @@ async def send_page(consumer, client_data, lang=None):
     data.update(my_context)
     await consumer.send_html(data)
 
-async def random_number(consumer, client_data, lang=None):
-    my_context = await get_context(consumer=consumer)
+async def key_up(consumer, client_data):
     data = {
         "action": client_data["action"],
-        "selector": "#output-random-number",
-        "html": randint(0, 10),
+        "selector": "#canvas",
+        "html": "Key up",
     }
-    data.update(my_context)
+    await consumer.send_html(data)
+
+async def key_right(consumer, client_data):
+    data = {
+        "action": client_data["action"],
+        "selector": "#canvas",
+        "html": "Key right",
+    }
+    await consumer.send_html(data)
+
+async def key_down(consumer, client_data):
+    data = {
+        "action": client_data["action"],
+        "selector": "#canvas",
+        "html": "Key down",
+    }
+    await consumer.send_html(data)
+
+async def key_left(consumer, client_data):
+    data = {
+        "action": client_data["action"],
+        "selector": "#canvas",
+        "html": "Key left",
+    }
     await consumer.send_html(data)

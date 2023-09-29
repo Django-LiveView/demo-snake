@@ -1,9 +1,20 @@
 {% load static %}
 
-<main data-controller="home">
-    <h1>LiveSnake</h1>
-    <p>
-	<button data-action="click->home#randomNumber">Random number</button>
-    </p>
-    <h2 id="output-random-number"></h2>
-</main>
+<div class="home"
+     data-controller="home pad"
+     data-action="
+	    keydown.up@window->pad#up
+	    keydown.right@window->pad#right
+	    keydown.down@window->pad#down
+	    keydown.left@window->pad#left
+	    "
+>
+    <h1 class="title">LiveSnake</h1>
+    <section id="canvas" class="canvas"></section>
+    <section class="pad">
+	<button class="pad__button pad__up" data-action="click->pad#up">☝️</button>
+	<button class="pad__button pad__right" data-action="click->pad#right">👉</button>
+	<button class="pad__button pad__down" data-action="click->pad#down">👇</button>
+	<button class="pad__button pad__left" data-action="click->pad#left">👈</button>
+    </section>
+</div>

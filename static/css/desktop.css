@@ -1,2 +1,112 @@
-body{font-family:"Open Sans",sans-serif;padding:0;margin:0;min-height:100vh}body>header{padding:0}h1{font-weight:normal}nav button.active{background-color:#fff;color:#000}footer{text-align:center}section:empty{display:none}#loading{position:fixed;bottom:0;right:0;padding:2rem;box-sizing:border-box}.errorlist>li{color:red}.feed__img{width:2rem}.notifications{position:fixed;bottom:0;right:0;padding:2rem;box-sizing:border-box;width:50vw}.notifications__notification{padding:1rem;font-weight:bold;margin:.2rem 0;padding:1rem}.notifications__notification:empty{display:none}.notifications__notification--success{background:green}.notifications__notification--info{background:blue}.notifications__notification--danger{background:red}.brand{width:2rem}.pet{text-align:center}.pet__image{max-width:30rem}
-/*# sourceMappingURL=desktop.css.map */
+:root {
+    --color-background: #8896ab;
+    --color-canvas-background: #95C000;
+    --color-player-1: #F1EDEE;
+    --color-head: #686963;
+    --color-target: red;
+    --color-background-button: #DEFFFC;
+    --color-background-button-hover: #B2F7EF;
+}
+
+/*
+   400 cells, 20x20
+   .canvas__cell : empty cell, required
+   Modifiers:
+   .canvas__floor : floor cell
+   .canvas__cell--target : target cell
+   .canvas__cell--player-1 : player 1 cell
+   .canvas__cell--head : player 1 head cell
+*/
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: var(--color-background);
+}
+
+.container {
+    margin-inline: auto;
+    max-width: 500px;
+    padding-inline: 1rem;
+}
+
+.home {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 5fr 2fr;
+}
+
+.title {
+    color: var(--color-background-button);
+    margin: 0;
+    text-align: center;
+    padding: 1rem;
+}
+
+.canvas {
+    background-color: var(--color-canvas-background);
+    display: grid;
+    grid-template-columns: repeat(20, 1fr);
+    grid-template-rows: repeat(20, 1fr);
+    width: 19rem;
+    margin-inline: auto;
+    border: .5rem solid var(--color-player-1);
+}
+
+.canvas__cell {
+    aspect-ratio: 1;
+}
+
+.canvas__cell--target {
+	background-color: var(--color-target);
+}
+
+.canvas__cell--player-1 {
+	background-color: var(--color-player-1);
+}
+
+.canvas__cell--head {
+	background-color: var(--color-head);
+}
+
+.pad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas:
+	"corner-left-up up corner-right-up"
+	"left center right"
+	"corner-left-down down corner-right-down";
+    width: 8rem;
+    height: 100%;
+    aspect-ratio: 1;
+    margin: 0 auto;
+}
+
+.pad__button {
+    background-color: var(--color-background-button);
+    border: none;
+    border-radius: 50%;
+}
+
+.pad__button:hover {
+    background-color: var(--color-background-button-hover);
+}
+
+.pad__up {
+    grid-area: up;
+}
+
+.pad__left {
+    grid-area: left;
+}
+
+.pad__down {
+    grid-area: down;
+}
+
+.pad__right {
+    grid-area: right;
+}
