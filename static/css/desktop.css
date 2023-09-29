@@ -32,17 +32,17 @@ body {
 }
 
 .home {
-    height: 100vh;
+    height: calc(100vh - 2rem);
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 5fr 2fr;
+    grid-gap: 1rem;
 }
 
 .title {
     color: var(--color-background-button);
     margin: 0;
     text-align: center;
-    padding: 1rem;
 }
 
 .canvas {
@@ -53,6 +53,7 @@ body {
     width: 19rem;
     margin-inline: auto;
     border: .5rem solid var(--color-player-1);
+    box-sizing: border-box;
 }
 
 .canvas__cell {
@@ -83,6 +84,7 @@ body {
     height: 100%;
     aspect-ratio: 1;
     margin: 0 auto;
+    grap: 1rem;
 }
 
 .pad__button {

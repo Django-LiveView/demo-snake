@@ -1,5 +1,10 @@
 {% for rows in canvas %}
 {% for col in rows %}
-<div class="canvas__cell"></div>
+<div class="canvas__cell
+	    {% if col == "floor" %} canvas__floor{% endif %}
+     	    {% if col == "target" %} canvas__cell--target{% endif %}
+	    {% if col == "player" %} canvas__cell--player-1{% endif %}
+	    {% if col == "player_head" %} canvas__cell--head{% endif %}
+	    "></div>
 {% endfor %}
 {% endfor %}

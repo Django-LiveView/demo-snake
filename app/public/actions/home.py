@@ -11,6 +11,7 @@ from django.templatetags.static import static
 from django.urls import reverse
 from django.utils.translation import gettext as _
 from random import randint
+from app.public.loop import direction
 
 
 template = "pages/home.html"
@@ -58,33 +59,17 @@ async def send_page(consumer, client_data, lang=None):
     await consumer.send_html(data)
 
 async def key_up(consumer, client_data):
-    data = {
-        "action": client_data["action"],
-        "selector": "#canvas",
-        "html": "Key up",
-    }
-    await consumer.send_html(data)
+    if not direction[0]["player"]["direction"] == "down":
+        direction[0]["player"]["direction"] = "up"
 
 async def key_right(consumer, client_data):
-    data = {
-        "action": client_data["action"],
-        "selector": "#canvas",
-        "html": "Key right",
-    }
-    await consumer.send_html(data)
+    if not direction[0]["player"]["direction"] == "left":
+        direction[0]["player"]["direction"] = "right"
 
 async def key_down(consumer, client_data):
-    data = {
-        "action": client_data["action"],
-        "selector": "#canvas",
-        "html": "Key down",
-    }
-    await consumer.send_html(data)
+    if not direction[0]["player"]["direction"] == "up":
+        direction[0]["player"]["direction"] = "down"
 
 async def key_left(consumer, client_data):
-    data = {
-        "action": client_data["action"],
-        "selector": "#canvas",
-        "html": "Key left",
-    }
-    await consumer.send_html(data)
+    if not direction[0]["player"]["direction"] == "right":
+        direction[0]["player"]["direction"] = "left"
