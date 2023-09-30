@@ -16,9 +16,7 @@ direction = [
     {
         "player": {
             "direction": "left",
-            "body": [
-                {"x": 10, "y": 10},
-            ],
+            "body": [],
         }
     }
 ]
