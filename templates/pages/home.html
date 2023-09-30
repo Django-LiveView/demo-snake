@@ -17,4 +17,11 @@
 	<button class="pad__button pad__down" data-action="click->pad#down">👇</button>
 	<button class="pad__button pad__left" data-action="click->pad#left">👈</button>
     </section>
+    <script>
+     // Disable pad if param "guess=1" exist
+     const url = new URL(window.location.href);
+     if (url.searchParams.has("guess")) {
+	 document.querySelector(".pad").style.display = "none";
+     }
+    </script>
 </div>
