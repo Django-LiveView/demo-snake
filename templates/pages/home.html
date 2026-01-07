@@ -1,21 +1,24 @@
 {% load static %}
 
-<div class="home"
-     data-controller="home pad"
-     data-action="
-	    keydown.up@window->pad#up
-	    keydown.right@window->pad#right
-	    keydown.down@window->pad#down
-	    keydown.left@window->pad#left
-	    "
->
+<div class="home" data-controller="home">
     <h1 class="title">LiveSnake</h1>
     <section id="canvas" class="canvas"></section>
     <section class="pad">
-	<button class="pad__button pad__up" data-action="click->pad#up">☝️</button>
-	<button class="pad__button pad__right" data-action="click->pad#right">👉</button>
-	<button class="pad__button pad__down" data-action="click->pad#down">👇</button>
-	<button class="pad__button pad__left" data-action="click->pad#left">👈</button>
+	<button class="pad__button pad__up"
+		data-liveview-function="key_up"
+		data-action="click->page#run">☝️</button>
+	<button class="pad__button pad__right"
+		data-liveview-function="key_right"
+		data-action="click->page#run">👉</button>
+	<button class="pad__button pad__down"
+		data-liveview-function="key_down"
+		data-action="click->page#run">👇</button>
+	<button class="pad__button pad__left"
+		data-liveview-function="key_left"
+		data-action="click->page#run">👈</button>
+	<div style="display:none"
+	     data-liveview-function="key_up"
+	     data-action="keydown.w@window->page#run"></div>
     </section>
     <script>
      // Disable pad if param "guess=1" exist

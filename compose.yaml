@@ -1,0 +1,42 @@
+services:
+
+  django:
+    build:
+      context: ./
+      dockerfile: ./Dockerfiles/django/Dockerfile
+    container_name: ${PROJECT_NAME}-django
+    restart: "no"
+    entrypoint: /django-launcher.sh
+    volumes:
+      - .:/usr/src/app/
+    env_file:
+      - .env
+    expose:
+      - 8000
+    links:
+      - redis
+    networks:
+      default:
+
+  nginx:
+    image: nginx:alpine
+    container_name: ${PROJECT_NAME}-nginx
+    restart: "no"
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - .:/usr/src/app/
+    depends_on:
+      - django
+    networks:
+      default:
+
+  redis:
+    image: redis:alpine
+    container_name: ${PROJECT_NAME}-redis
+    restart: "no"
+    expose:
+      - ${REDIS_PORT}
+    networks:
+      default:

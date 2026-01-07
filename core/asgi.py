@@ -8,27 +8,26 @@ https://docs.djangoproject.com/en/4.0/howto/deployment/asgi/
 """
 
 import os
-import django
+from django.core.asgi import get_asgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
-django.setup()
 
-from channels.auth import AuthMiddlewareStack
-from django.core.asgi import get_asgi_application
-from channels.security.websocket import AllowedHostsOriginValidator
+# Initialize Django ASGI application early
+django_asgi_app = get_asgi_application()
+
 from channels.routing import ProtocolTypeRouter, URLRouter
-from django.urls import re_path
-from liveview.consumers import LiveViewConsumer
-
+from channels.auth import AuthMiddlewareStack
+from channels.security.websocket import AllowedHostsOriginValidator
+from liveview.routing import get_liveview_urlpatterns
 
 application = ProtocolTypeRouter(
     {
-        # Django's ASGI application to handle traditional HTTP requests
-        "http": get_asgi_application(),
-        # WebSocket handler
-        "websocket": AuthMiddlewareStack(
-            AllowedHostsOriginValidator(
-                URLRouter([re_path(r"^ws/liveview/$", LiveViewConsumer.as_asgi())])
+        "http": django_asgi_app,
+        "websocket": AllowedHostsOriginValidator(
+            AuthMiddlewareStack(
+                URLRouter(
+                    get_liveview_urlpatterns()
+                )
             )
         ),
     }

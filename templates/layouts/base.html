@@ -1,6 +1,6 @@
-{% load static i18n %}
+{% load static i18n liveview %}
 <!doctype html>{% get_current_language as CURRENT_LANGUAGE %}
-<html lang="{{ CURRENT_LANGUAGE }}">
+<html lang="en" data-room="snake-game">
     <head>
         <meta charset="utf-8">
         <title>Demo Django LiveView</title>
@@ -28,17 +28,12 @@
 	    href="{% static 'css/main.css' %}"
 	    rel="stylesheet"
 	>
-	<script type="module" src="{% static 'js/main.js' %}" defer></script>
     </head>
-    <body
-		data-host="{{ request.get_host }}"
-		data-debug="{{ DEBUG }}"
-	>
-            <section id="loading"></section>
-	    <section id="notifications" class="notifications"></section>
-	    <section id="no_connection"></section>
+    <body data-controller="page">
 	    <div class="container">
-		<main id="main" class="main-container">{% include page %}</main>
+		<main id="main" class="main-container">{% include "pages/home.html" %}</main>
 	    </div>
+	    <script src="{% static 'liveview/liveview.min.js' %}" defer></script>
+	    <script type="module" src="{% static 'js/main.js' %}" defer></script>
     </body>
 </html>

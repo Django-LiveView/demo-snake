@@ -1,44 +1,56 @@
 import { Controller } from "../vendors/stimulus.js";
-import { sendData } from "../webSocketsCli.js";
-import { getLang } from "../mixins/miscellaneous.js";
 
 export default class extends Controller {
 
     static targets = [];
 
     up(event) {
-	sendData(
-	    {
-		action: "home->key_up",
-		data: {}
-	    }
-	);
+	event.preventDefault();
+	// Create a fake button element with the liveview function data
+	const button = document.createElement('button');
+	button.setAttribute('data-liveview-function', 'key_up');
+	// Trigger the page controller's run method
+	const pageController = this.application.getControllerForElementAndIdentifier(document.body, 'page');
+	if (pageController) {
+	    const fakeEvent = new Event('click');
+	    Object.defineProperty(fakeEvent, 'currentTarget', { value: button });
+	    pageController.run(fakeEvent);
+	}
     }
 
     right(event) {
-	sendData(
-	    {
-		action: "home->key_right",
-		data: {}
-	    }
-	);
+	event.preventDefault();
+	const button = document.createElement('button');
+	button.setAttribute('data-liveview-function', 'key_right');
+	const pageController = this.application.getControllerForElementAndIdentifier(document.body, 'page');
+	if (pageController) {
+	    const fakeEvent = new Event('click');
+	    Object.defineProperty(fakeEvent, 'currentTarget', { value: button });
+	    pageController.run(fakeEvent);
+	}
     }
 
     down(event) {
-	sendData(
-	    {
-		action: "home->key_down",
-		data: {}
-	    }
-	);
+	event.preventDefault();
+	const button = document.createElement('button');
+	button.setAttribute('data-liveview-function', 'key_down');
+	const pageController = this.application.getControllerForElementAndIdentifier(document.body, 'page');
+	if (pageController) {
+	    const fakeEvent = new Event('click');
+	    Object.defineProperty(fakeEvent, 'currentTarget', { value: button });
+	    pageController.run(fakeEvent);
+	}
     }
 
     left(event) {
-	sendData(
-	    {
-		action: "home->key_left",
-		data: {}
-	    }
-	);
+	event.preventDefault();
+	const button = document.createElement('button');
+	button.setAttribute('data-liveview-function', 'key_left');
+	const pageController = this.application.getControllerForElementAndIdentifier(document.body, 'page');
+	if (pageController) {
+	    const fakeEvent = new Event('click');
+	    Object.defineProperty(fakeEvent, 'currentTarget', { value: button });
+	    pageController.run(fakeEvent);
+	}
     }
 }

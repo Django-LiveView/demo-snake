@@ -147,16 +147,18 @@ def render():
     my_channel_layer = get_channel_layer()
     if my_channel_layer:
         html = render_to_string("components/canvas.html", {"canvas": canvas})
-        # Render
         data = {
-            "action": "Update canvas",
-            "selector": "#canvas",
+            "target": "#canvas",
             "html": html,
-            "append": False,
         }
-        async_to_sync(my_channel_layer.group_send)(
-            "broadcast", {"type": "send_data_to_frontend", "data": data}
-        )
+        try:
+            async_to_sync(my_channel_layer.group_send)(
+                "broadcast", {"type": "broadcast_message", "message": data}
+            )
+        except Exception as e:
+            import logging
+            logger = logging.getLogger(__name__)
+            logger.error(f"Error sending broadcast: {e}")
 
 
 def loop():
@@ -168,9 +170,11 @@ def loop():
 
 def start():
     global direction
+
     create_canvas()
-    # Set player position
     direction[0]["player"]["body"] = [
         search_random_free_space(),
     ]
-    threading.Thread(target=loop).start()
+
+    thread = threading.Thread(target=loop, daemon=True)
+    thread.start()

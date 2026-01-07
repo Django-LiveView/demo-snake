@@ -2,3 +2,5 @@ static/admin
 /.env
 /run.sh
 /static/django_extensions
+db.sqlite3
+caddy_data/

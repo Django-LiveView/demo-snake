@@ -18,10 +18,6 @@ template = "pages/home.html"
 
 # Database
 
-from app.public.loop import start
-
-start()
-
 # Functions
 
 async def get_context(consumer=None):
