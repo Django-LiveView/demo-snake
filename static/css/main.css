@@ -124,3 +124,23 @@ body {
 .pad__right {
     grid-area: right;
 }
+
+.footer {
+    text-align: center;
+    padding: 1rem;
+    color: var(--color-background-button);
+    font-size: 0.875rem;
+}
+
+.footer p {
+    margin: 0;
+}
+
+.footer a {
+    color: var(--color-background-button);
+    text-decoration: underline;
+}
+
+.footer a:hover {
+    color: var(--color-background-button-hover);
+}
