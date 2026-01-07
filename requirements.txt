@@ -1,7 +1,7 @@
 # Django
 django==6.0
 django-extensions==3.2.3
-django-liveview==2.1.8
+django-liveview==2.1.9
 
 # Databases
 redis==5.2.0

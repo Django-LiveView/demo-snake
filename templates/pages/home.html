@@ -3,7 +3,10 @@
 <div class="home" data-controller="home">
     <h1 class="title">LiveSnake</h1>
     <section id="canvas" class="canvas"></section>
-    <section class="pad">
+    <section class="pad"
+	     data-liveview-keyboard-map='{"w":"key_up","a":"key_left","s":"key_down","d":"key_right"}'
+	     data-liveview-focus="true"
+    >
 	<button class="pad__button pad__up"
 		data-liveview-function="key_up"
 		data-action="click->page#run">☝️</button>

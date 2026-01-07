@@ -37,7 +37,7 @@ def search_random_free_space():
     y = random_y()
     if canvas[x][y] == "floor":
         return {"x": x, "y": y}
-    search_random_free_space()
+    return search_random_free_space()
 
 
 def create_canvas():
@@ -56,6 +56,13 @@ def update():
     global canvas
     global width
     global height
+    # Check if player will eat target before moving
+    will_eat = False
+    if (
+        direction[0]["player"]["body"][0]["x"] == target["x"]
+        and direction[0]["player"]["body"][0]["y"] == target["y"]
+    ):
+        will_eat = True
     # Move player
     if direction[0]["player"]["direction"] == "left":
         direction[0]["player"]["body"].insert(
@@ -67,7 +74,8 @@ def update():
                 else height - 1,
             },
         )
-        direction[0]["player"]["body"].pop()
+        if not will_eat:
+            direction[0]["player"]["body"].pop()
     elif direction[0]["player"]["direction"] == "right":
         direction[0]["player"]["body"].insert(
             0,
@@ -78,7 +86,8 @@ def update():
                 else 0,
             },
         )
-        direction[0]["player"]["body"].pop()
+        if not will_eat:
+            direction[0]["player"]["body"].pop()
     elif direction[0]["player"]["direction"] == "up":
         direction[0]["player"]["body"].insert(
             0,
@@ -89,7 +98,8 @@ def update():
                 "y": direction[0]["player"]["body"][0]["y"],
             },
         )
-        direction[0]["player"]["body"].pop()
+        if not will_eat:
+            direction[0]["player"]["body"].pop()
     elif direction[0]["player"]["direction"] == "down":
         direction[0]["player"]["body"].insert(
             0,
@@ -100,7 +110,8 @@ def update():
                 "y": direction[0]["player"]["body"][0]["y"],
             },
         )
-        direction[0]["player"]["body"].pop()
+        if not will_eat:
+            direction[0]["player"]["body"].pop()
     # Die. Check if player is in body
     is_dead = False
     for i in range(1, len(direction[0]["player"]["body"])):
@@ -116,16 +127,10 @@ def update():
             search_random_free_space(),
         ]
     # Eat. Check if player is in target
-    if (
-        direction[0]["player"]["body"][0]["x"] == target["x"]
-        and direction[0]["player"]["body"][0]["y"] == target["y"]
-    ):
+    if will_eat:
         new_target = search_random_free_space()
         target["x"] = new_target["x"]
         target["y"] = new_target["y"]
-        direction[0]["player"]["body"].append(
-            new_target,
-        )
     # Fill canvas
     canvas = create_canvas()
     # Add player
