@@ -32,12 +32,12 @@ body {
 }
 
 .home {
-    height: calc(100vh - 2rem);
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 5fr 2fr;
-    grid-gap: 1rem;
-    padding-block: 1rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    justify-content: center;
 }
 
 .title {
@@ -51,9 +51,11 @@ body {
     display: grid;
     grid-template-columns: repeat(20, 1fr);
     grid-template-rows: repeat(20, 1fr);
-    height: 100%;
+    width: 100%;
+    max-width: 400px;
     margin-inline: auto;
     aspect-ratio: 1;
+    flex-shrink: 0;
 }
 
 @media all and (max-width: 600px) {
@@ -127,20 +129,30 @@ body {
 
 .footer {
     text-align: center;
-    padding: 1rem;
-    color: var(--color-background-button);
-    font-size: 0.875rem;
+    padding: 0.5rem 0;
+    color: white;
+    font-size: 0.75rem;
+    width: 100%;
+    flex-shrink: 0;
 }
 
 .footer p {
     margin: 0;
+    line-height: 1.5;
 }
 
 .footer a {
-    color: var(--color-background-button);
-    text-decoration: underline;
+    color: var(--color-target);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
 }
 
 .footer a:hover {
-    color: var(--color-background-button-hover);
+    opacity: 0.8;
+    text-decoration: underline;
+}
+
+.footer__separator {
+    margin: 0 0.5rem;
+    opacity: 0.7;
 }
