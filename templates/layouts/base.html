@@ -1,6 +1,6 @@
 {% load static i18n liveview %}
 <!doctype html>{% get_current_language as CURRENT_LANGUAGE %}
-<html lang="en" data-room="snake-game">
+<html lang="en" data-room="{% liveview_room_uuid %}">
     <head>
         <meta charset="utf-8">
         <title>Demo Django LiveView</title>
