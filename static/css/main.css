@@ -73,7 +73,7 @@ body {
 
 .canvas__cell--target {
     background-color: var(--color-target);
-    border-color: var(--color-target);
+    border-radius: 50%;
 }
 
 .canvas__cell--player-1 {

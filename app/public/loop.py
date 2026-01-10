@@ -12,18 +12,18 @@ WIDTH = 20
 HEIGHT = 20
 PLAYER_TIMEOUT = 30  # seconds
 
-# Color palette for players
+# Color palette for players (high contrast with #95C000 background)
 PLAYER_COLORS = [
-    "#FF6B6B",  # Red
-    "#4ECDC4",  # Cyan
-    "#45B7D1",  # Blue
-    "#FFA07A",  # Light Salmon
-    "#98D8C8",  # Mint
-    "#F7DC6F",  # Yellow
-    "#BB8FCE",  # Purple
-    "#85C1E2",  # Sky Blue
-    "#F8B88B",  # Peach
-    "#52B788",  # Green
+    "#FF1744",  # Red
+    "#D500F9",  # Magenta
+    "#00B0FF",  # Sky Blue
+    "#FFEA00",  # Yellow
+    "#FF6E40",  # Orange
+    "#00E5FF",  # Cyan
+    "#F50057",  # Pink
+    "#536DFE",  # Indigo
+    "#FFAB00",  # Amber
+    "#00E676",  # Green
 ]
 
 # Global game state (shared by all players)
