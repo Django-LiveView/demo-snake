@@ -1,10 +1,13 @@
 {% for rows in canvas %}
 {% for col in rows %}
-<div class="canvas__cell
-	    {% if col == "floor" %} canvas__floor{% endif %}
-     	    {% if col == "target" %} canvas__cell--target{% endif %}
-	    {% if col == "player" %} canvas__cell--player-1{% endif %}
-	    {% if col == "player_head" %} canvas__cell--head{% endif %}
-	    "></div>
+{% if col == "floor" %}
+<div class="canvas__cell canvas__floor"></div>
+{% elif col.type == "target" %}
+<div class="canvas__cell canvas__cell--target"></div>
+{% elif col.type == "player" %}
+<div class="canvas__cell canvas__cell--player-1" style="background-color: {{ col.color }}; border-color: {{ col.color }};"></div>
+{% elif col.type == "player_head" %}
+<div class="canvas__cell canvas__cell--head" style="background-color: {{ col.color }}; border-color: {{ col.color }};"></div>
+{% endif %}
 {% endfor %}
 {% endfor %}
