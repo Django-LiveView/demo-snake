@@ -8,6 +8,7 @@ class PublicConfig(AppConfig):
 
     def ready(self):
         # Only run in the main process, not in the autoreloader process
-        if os.environ.get('RUN_MAIN') == 'true':
+        if os.environ.get("RUN_MAIN") == "true":
             from app.public.loop import start
+
             start()

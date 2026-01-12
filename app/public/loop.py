@@ -1,13 +1,15 @@
+import logging
+import threading
+from random import choice, randint
+from time import sleep, time
+
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
-from time import sleep, time
 from django.template.loader import render_to_string
-import threading
-from random import randint, choice
 
+logger = logging.getLogger(__name__)
 
 # Game constants
-FPS = 1000 / 40
 WIDTH = 20
 HEIGHT = 20
 PLAYER_TIMEOUT = 30  # seconds
@@ -75,23 +77,28 @@ def get_unused_color():
     return choice(PLAYER_COLORS)
 
 
+def _create_player(room_id):
+    """Create a new player in a random free position"""
+    # Ensure canvas exists
+    if not game_state.get("canvas"):
+        game_state["canvas"] = create_canvas()
+
+    # Find a free space for the new player
+    free_pos = search_random_free_space()
+
+    game_state["players"][room_id] = {
+        "direction": "left",
+        "body": [free_pos],
+        "color": get_unused_color(),
+        "last_activity": time(),
+    }
+
+
 def add_player(room_id):
     """Add a new player to the game"""
     with game_lock:
         if room_id not in game_state["players"]:
-            # Ensure canvas exists
-            if not game_state.get("canvas"):
-                game_state["canvas"] = create_canvas()
-
-            # Find a free space for the new player
-            free_pos = search_random_free_space()
-
-            game_state["players"][room_id] = {
-                "direction": "left",
-                "body": [free_pos],
-                "color": get_unused_color(),
-                "last_activity": time(),
-            }
+            _create_player(room_id)
 
 
 def remove_player(room_id):
@@ -106,19 +113,7 @@ def set_direction(room_id, new_direction):
     with game_lock:
         # Add player if not exists
         if room_id not in game_state["players"]:
-            # Ensure canvas exists
-            if not game_state.get("canvas"):
-                game_state["canvas"] = create_canvas()
-
-            # Find a free space for the new player
-            free_pos = search_random_free_space()
-
-            game_state["players"][room_id] = {
-                "direction": "left",
-                "body": [free_pos],
-                "color": get_unused_color(),
-                "last_activity": time(),
-            }
+            _create_player(room_id)
 
         player = game_state["players"][room_id]
         current_direction = player["direction"]
@@ -220,9 +215,15 @@ def update():
         for room_id, player in game_state["players"].items():
             for i, segment in enumerate(player["body"]):
                 if i == 0:
-                    canvas[segment["x"]][segment["y"]] = {"type": "player_head", "color": player["color"]}
+                    canvas[segment["x"]][segment["y"]] = {
+                        "type": "player_head",
+                        "color": player["color"],
+                    }
                 else:
-                    canvas[segment["x"]][segment["y"]] = {"type": "player", "color": player["color"]}
+                    canvas[segment["x"]][segment["y"]] = {
+                        "type": "player",
+                        "color": player["color"],
+                    }
 
         # Add target
         target = game_state["target"]
@@ -235,9 +236,12 @@ def render():
     """Broadcast canvas to all connected clients"""
     my_channel_layer = get_channel_layer()
     if my_channel_layer:
-        html = render_to_string("components/canvas.html", {
-            "canvas": game_state["canvas"],
-        })
+        html = render_to_string(
+            "components/canvas.html",
+            {
+                "canvas": game_state["canvas"],
+            },
+        )
         data = {
             "target": "#canvas",
             "html": html,
@@ -247,9 +251,6 @@ def render():
                 "broadcast", {"type": "broadcast_message", "message": data}
             )
         except Exception as e:
-            import logging
-
-            logger = logging.getLogger(__name__)
             logger.error(f"Error sending broadcast: {e}")
 
 
