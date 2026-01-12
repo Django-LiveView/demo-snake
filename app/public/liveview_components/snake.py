@@ -2,6 +2,14 @@ from liveview import liveview_handler
 from app.public.loop import add_player, remove_player, set_direction
 
 
+@liveview_handler("init")
+def init(consumer, content):
+	"""Called when a client initializes"""
+	room_id = getattr(consumer, 'room_id', None) or content.get("room")
+	if room_id:
+		add_player(room_id)
+
+
 @liveview_handler("key_up")
 def key_up(consumer, content):
     """Handle up arrow key"""
