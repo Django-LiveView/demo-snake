@@ -1,20 +1,14 @@
-# Requirements
+# LiveSnake
 
-- [Docker](https://www.docker.com/).
-- [Docker Compose](https://docs.docker.com/compose/install/).
+Multiplayer snake game built with [Django LiveView](https://django-liveview.andros.dev/).
 
-# Installation
-
-Create .env file:
+## Run
 
 ```bash
 cp env.example .env
-```
-
-# Run 🏃
-
-```bash
 docker compose up
 ```
 
-Open `http://localhost:8000`.
+Open http://localhost:8000
+
+Use WASD or arrow buttons to play.
