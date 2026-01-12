@@ -2,6 +2,8 @@
 
 Multiplayer snake game built with [Django LiveView](https://django-liveview.andros.dev/).
 
+Each connected user becomes a new player. Open in different browsers to test multiplayer.
+
 ## Run
 
 ```bash
